@@ -26,6 +26,11 @@ namespace GoldenGodhome
 			s.Dispose();
 		}
 
+		public override string GetVersion()
+		{
+			return "1.0.0";
+		}
+
 		private bool PatchGodhomeEnemySprites(GameObject enemy, bool isAlreadyDead)
 		{
 			string normalName = enemy.name;
