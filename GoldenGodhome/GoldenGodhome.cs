@@ -18,6 +18,7 @@ namespace GoldenGodhome
 		public override void Initialize()
 		{
 			ModHooks.OnEnableEnemyHook += PatchGodhomeEnemySprites;
+			UnityEngine.SceneManagement.SceneManager.activeSceneChanged += OnSceneLoaded;
 
 			Assembly a = Assembly.GetExecutingAssembly();
 			Stream s = a.GetManifestResourceStream("GoldenGodhome.godhome");
@@ -49,6 +50,8 @@ namespace GoldenGodhome
 				normalName = normalName.Remove(normalName.Length - 1);
 			}
 
+			Log(normalName);
+
 			if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().name.StartsWith("GG_") && GodhomeTextures.ContainsKey(normalName))
 			{
 				enemy.transform.gameObject.GetComponent<tk2dSprite>().Collection.FirstValidDefinition.material.mainTexture = bundle.LoadAsset<Texture2D>(GodhomeTextures[normalName]);
@@ -69,12 +72,21 @@ namespace GoldenGodhome
 				case "GG_Brooding_Mawlek_V":
 					newScene.FindGameObject("Battle Scene").FindGameObjectInChildren("Tiso Boss").GetComponent<tk2dSprite>().GetCurrentSpriteDef().material.mainTexture = bundle.LoadAsset<Texture2D>("GG_tiso");
 					break;
+				case "GG_Radiance":
+					newScene.FindGameObject("Boss Control").FindGameObjectInChildren("Radiance Roar").GetComponent<tk2dSprite>().Collection.materials[0].mainTexture = bundle.LoadAsset<Texture2D>("GG_absolute_radiance2");
+					newScene.FindGameObject("Boss Control").FindGameObjectInChildren("Radiance Roar").GetComponent<tk2dSprite>().Collection.materials[1].mainTexture = bundle.LoadAsset<Texture2D>("GG_absolute_radiance");
+					break;
+				case "GG_Grimm":
+					newScene.FindGameObject("Grimm Scene").FindGameObjectInChildren("Grimm Boss").GetComponent<tk2dSprite>().Collection.materials[0].mainTexture = bundle.LoadAsset<Texture2D>("GG_troupe_master_grimm");
+					newScene.FindGameObject("Grimm Scene").FindGameObjectInChildren("Grimm Boss").GetComponent<tk2dSprite>().Collection.materials[1].mainTexture = bundle.LoadAsset<Texture2D>("GG_troupe_master_grimm2");
+					break;
 			}
 		}
 
 		public static readonly Dictionary<string, string> GodhomeTextures = new Dictionary<string, string>()
 		{
 			{ "Infected Knight", "GG_broken_vessel" },
+			{ "Lost Kin", "GG_broken_vessel" },
 			{ "Mawlek Body", "GG_brooding_mawlek" },
 			{ "Oro", "GG_brothers_oro_mato" },
 			{ "Mato", "GG_brothers_oro_mato" },
@@ -104,7 +116,7 @@ namespace GoldenGodhome
 			{ "Nightmare Grimm Boss", "GG_nightmare_king_grimm" },
 			{ "Ghost Warrior No Eyes", "GG_no_eyes" },
 			{ "Mimic Spider", "GG_nosk" },
-			{ "Mega Fat Bee ", "GG_oblobbles" },
+			{ "Mega Fat Bee", "GG_oblobbles" },
 			{ "Sheo Boss", "GG_paintmaster_sheo" },
 			{ "HK Prime", "GG_pure_vessel" },
 			{ "Mage Lord", "GG_soul_master" },
@@ -113,7 +125,6 @@ namespace GoldenGodhome
 			{ "Dream Mage Lord Phase2", "GG_soul_tyrant" },
 			{ "Mage Knight", "GG_soul_warrior" },
 			{ "Mantis Traitor Lord", "GG_traitor_lord" },
-			{ "Grimm Boss", "GG_troupe_master_grimm" },
 			{ "Giant Buzzer Col", "GG_vengefly_king" },
 			{ "Black Knight 1", "GG_watcher_knight" },
 			{ "Black Knight 2", "GG_watcher_knight" },
@@ -124,7 +135,6 @@ namespace GoldenGodhome
 			{ "Hornet Nosk", "GG_winged_nosk" },
 			{ "Ghost Warrior Xero", "GG_xero" },
 			{ "Mega Moss Charger", "GG_massive_moss_charger" },
-			{ "Absolute Radiance", "GG_absolute_radiance" },
 		};
 	}
 }
